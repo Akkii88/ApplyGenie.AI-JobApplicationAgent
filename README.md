@@ -1,506 +1,467 @@
-# 🎯 ApplyGenie AI - The Ultimate Job Application Agent
+# ApplyGenie AI - Job Application Intelligence Platform
 
 <div align="center">
 
-![ApplyGenie AI](https://img.shields.io/badge/ApplyGenie-AI-blue?style=for-the-badge&logo=ai&logoColor=white)
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=flat&logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat&logo=node.js)
-![Groq AI](https://img.shields.io/badge/Groq-AI-FFA500?style=flat&logo=ai)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat)
+[![ApplyGenie AI](https://img.shields.io/badge/ApplyGenie-AI-blue?style=for-the-badge&logo=ai&logoColor=white)](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=flat&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat&logo=node.js)](https://nodejs.org/)
+[![Groq AI](https://img.shields.io/badge/Groq-AI-FFA500?style=flat&logo=ai)](https://groq.com/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
 
-**Transform your job search with AI-powered insights and personalized application strategies**
+**AI-Powered Job Application Analysis and Content Generation**
 
-[🚀 Live Demo](#) • [📖 Documentation](#) • [🛠️ API Reference](#api-documentation)
+[Live Demo](#) • [Documentation](#api-documentation) • [Contributing](#contributing)
 
 </div>
 
 ---
 
-## ✨ What is ApplyGenie AI?
+## Overview
 
-**ApplyGenie AI** is an intelligent full-stack web application that revolutionizes the job application process. It analyzes your resume against job descriptions using advanced AI to provide:
+ApplyGenie AI is an intelligent full-stack web application that revolutionizes the job application process by analyzing candidate resumes against job descriptions using advanced AI. The platform provides personalized match scores, skills gap analysis, and generates tailored application content to improve job application success rates.
 
-- 🎯 **Personalized Match Scores** - Real compatibility analysis
-- 🔍 **Skills Gap Analysis** - What you're missing vs. what's required  
-- 📝 **Tailored Application Content** - AI-generated cover letters and answers
-- 💡 **Resume Optimization** - Specific improvement suggestions
-- 🤖 **Intelligent Job Scraping** - Automatic job posting extraction
+### Key Capabilities
 
-### 🎨 Beautiful UI with Professional Design
-
-- **Clean Interface**: Modern glassmorphism design with smooth animations
-- **Responsive Layout**: Works perfectly on desktop, tablet, and mobile
-- **Interactive Elements**: Hover effects, progress bars, and copy-to-clipboard functionality
-- **Real-time Feedback**: Loading states and error handling
+- **Resume Intelligence**: PDF parsing and content analysis
+- **Job Posting Analysis**: Automated web scraping and text extraction  
+- **AI-Powered Matching**: Comparative analysis using Groq AI
+- **Content Generation**: Tailored application materials
+- **Skills Optimization**: Gap analysis and improvement recommendations
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture
 
 ```mermaid
 graph TB
-    subgraph "🎨 Frontend (React + Vite)"
-        A[User Interface]
-        B[Resume Upload]
-        C[Job Input Form]
-        D[Results Display]
-        E[Copy Functionality]
+    subgraph "Frontend Layer"
+        UI[React Application]
+        UX[User Interface Components]
+        API[HTTP Client]
     end
     
-    subgraph "⚙️ Backend (Node.js + Express)"
-        F[API Server]
-        G[File Upload Handler]
-        H[Resume Parser]
-        I[Job Scraper]
-        J[AI Analysis Engine]
+    subgraph "Backend Layer"  
+        SVR[Express Server]
+        UPL[File Upload Handler]
+        PRS[Document Parser]
+        SCR[Web Scraper]
+        AI[AI Analysis Engine]
     end
     
-    subgraph "🤖 AI & Data Processing"
-        K[Groq AI Model]
-        L[Text Analysis]
-        M[Resume-Job Comparison]
-        N[Content Generation]
+    subgraph "AI & Data Services"
+        GRQ[Groq AI Model]
+        TXT[Text Processing]
+        CMP[Comparative Analysis]
+        GEN[Content Generation]
     end
     
-    A --> F
-    B --> G
-    C --> F
-    G --> H
-    F --> I
-    H --> J
-    I --> J
-    J --> K
-    K --> L
-    L --> M
-    M --> N
-    N --> D
-    D --> E
+    UI --> API
+    API --> SVR
+    SVR --> UPL
+    SVR --> SCR
+    SVR --> AI
+    UPL --> PRS
+    PRS --> AI
+    SCR --> AI
+    AI --> GRQ
+    GRQ --> TXT
+    TXT --> CMP
+    CMP --> GEN
+    GEN --> UI
 ```
 
 ---
 
-## 🔄 How ApplyGenie AI Works
+## How It Works
 
-### 📋 Step-by-Step Workflow
+### Application Workflow
 
 ```mermaid
 sequenceDiagram
-    participant 👤 as Job Seeker
-    participant 🎨 as Frontend UI
-    participant ⚙️ as Backend API
-    participant 🤖 as Groq AI
-    participant 📄 as Job Posting
-    participant 📄 as Resume PDF
+    participant Applicant
+    participant Frontend
+    participant Backend
+    participant AI_Engine
+    participant Job_Source
+    participant Resume_PDF
 
-    👤->>🎨: Opens ApplyGenie AI
-    🎨->>👤: Shows clean input interface
+    Applicant->>Frontend: Access Application
+    Frontend->>Applicant: Display Input Interface
     
-    👤->>🎨: Uploads Resume PDF
-    🎨->>⚙️: POST /api/analyze (FormData)
+    Applicant->>Frontend: Upload Resume PDF
+    Applicant->>Frontend: Provide Job Information
+    Frontend->>Backend: POST /api/analyze (FormData)
+    
+    Backend->>Resume_PDF: Extract Text Content
+    Resume_PDF-->>Backend: Resume Text
     
     alt Job URL Provided
-        👤->>🎨: Enters job posting URL
-        🎨->>⚙️: URL in FormData
-        ⚙️->>📄: Playwright scrapes job page
-        📄-->>⚙️: Job text extracted
+        Backend->>Job_Source: Scrape Job Posting
+        Job_Source-->>Backend: Job Description Text
     else Job Description Provided
-        👤->>🎨: Pastes job description
-        🎨->>⚙️: Description in FormData
-        ⚙️->>⚙️: Use provided text
+        Backend->>Backend: Process Input Text
     end
     
-    ⚙️->>📄: pdf-parse extracts resume text
-    📄-->>⚙️: Resume text ready
+    Backend->>AI_Engine: Analyze Resume vs Job Requirements
+    AI_Engine-->>Backend: Comparative Analysis Results
     
-    ⚙️->>🤖: Send job + resume texts to Groq AI
-    🤖->>⚙️: AI analysis results
-    
-    ⚙️-->>🎨: JSON response with insights
-    🎨-->>👤: Beautiful results display
-    
-    👤->>🎨: Copy tailored content
-    🎨->>👤: Ready for job application! 🎉
+    Backend-->>Frontend: Structured Analysis Data
+    Frontend-->>Applicant: Display Results & Recommendations
 ```
 
-### 🎯 Core Features Breakdown
+### Core Analysis Process
 
-#### 1. **Resume Intelligence** 📄
-- **PDF Upload**: Secure file handling with validation
-- **Text Extraction**: Advanced PDF parsing using pdf-parse
-- **Content Analysis**: AI understands your experience and skills
-
-#### 2. **Job Posting Analysis** 🔍
-- **URL Scraping**: Playwright extracts job details automatically
-- **Manual Input**: Paste job descriptions directly
-- **Smart Parsing**: Identifies requirements, skills, and company culture
-
-#### 3. **AI-Powered Matching** 🤖
-- **Resume-Job Comparison**: Groq AI analyzes compatibility
-- **Skills Mapping**: Matches your experience to job requirements
-- **Gap Analysis**: Identifies missing skills and experience
-
-#### 4. **Content Generation** ✍️
-- **Tailored Answers**: "Why should we hire you?" responses
-- **Cover Messages**: Professional introduction letters
-- **Resume Suggestions**: Specific bullet point improvements
+1. **Document Processing**: Resume PDF parsing and job description extraction
+2. **Content Analysis**: Natural language processing of candidate experience and job requirements
+3. **Comparative Matching**: Algorithmic comparison of skills, experience, and qualifications
+4. **Gap Identification**: Analysis of missing competencies and experience
+5. **Content Synthesis**: Generation of tailored application materials
+6. **Optimization Recommendations**: Specific improvement suggestions for resume and applications
 
 ---
 
-## 🚀 Quick Start
+## Technology Stack
 
-### Prerequisites
-- ✅ Node.js 18+
-- ✅ npm or yarn
-- ✅ Git
+### Frontend Architecture
+- **React 18** with TypeScript for type-safe component development
+- **Vite** for optimized development and production builds
+- **Tailwind CSS** for utility-first responsive styling
+- **Framer Motion** for smooth user interface transitions
 
-### ⚡ One-Command Setup
+### Backend Architecture
+- **Node.js** runtime with Express.js web framework
+- **Groq AI** for high-performance language model inference
+- **Playwright** for automated web scraping and data extraction
+- **Multer** for secure multipart file upload handling
+- **pdf-parse** for robust PDF text extraction
+
+### Development Tools
+- **ESLint** for code quality enforcement
+- **Prettier** for consistent code formatting
+- **TypeScript** for enhanced developer experience
+- **Git** for version control and collaboration
+
+---
+
+## Installation & Setup
+
+### System Requirements
+- Node.js version 18.0 or higher
+- npm package manager
+- Git version control system
+
+### Quick Start
 
 ```bash
-# Clone and run everything
+# Clone the repository
 git clone https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent.git
 cd ApplyGenie.AI-JobApplicationAgent
 
 # Install all dependencies
 npm run install-all
 
-# Start both frontend and backend
+# Configure environment variables
+cd server
+cp .env.example .env
+# Edit .env with your GROQ_API_KEY
+
+# Start the application
 npm run start
 ```
 
-### 🔧 Manual Setup
+### Manual Setup
 
-#### Backend Setup
+#### Backend Configuration
 ```bash
 cd server
 npm install
 
-# Create environment file
+# Environment setup
 cp .env.example .env
-# Edit .env with your GROQ_API_KEY
+# Configure GROQ_API_KEY and other settings
 
 npm run dev
 ```
 
-#### Frontend Setup
+#### Frontend Configuration
 ```bash
 cd ../stitch-ui
 npm install
 npm run dev
 ```
 
-### 🌐 Access the Application
-
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:5001
+### Access Points
+- **Application Interface**: http://localhost:5173
+- **API Endpoint**: http://localhost:5001
 - **Health Check**: http://localhost:5001/health
 
 ---
 
-## 📖 Detailed Usage Guide
+## Usage Guide
 
-### 🎯 For Job Seekers
+### For Job Applicants
 
-#### Step 1: Prepare Your Documents
-```
-📄 Resume Requirements:
-   • PDF format only
-   • Max 5MB file size
-   • Text must be selectable (not image-based)
-   • Include your work experience and skills
+#### Document Preparation
+**Resume Requirements:**
+- Format: PDF only
+- Maximum file size: 5MB
+- Content: Selectable text (not image-based)
+- Sections: Work experience, education, skills
 
-🔍 Job Posting Options:
-   • Copy the job URL from company career pages
-   • Or paste the complete job description
-```
+**Job Information Options:**
+- Job posting URL (automatic scraping)
+- Manual job description paste
 
-#### Step 2: Start the Analysis
-```
-1. Open ApplyGenie AI in your browser
-2. Upload your resume PDF
-3. Enter job URL or paste job description
-4. Click "Run Agent"
-5. Wait for AI analysis (10-20 seconds)
-```
+#### Analysis Process
+1. Access the ApplyGenie AI application
+2. Upload your resume PDF file
+3. Provide job posting URL or description
+4. Initiate analysis with "Run Agent"
+5. Review comprehensive results (10-20 seconds processing time)
 
-#### Step 3: Review Your Results
-```
-📊 Match Score: Your compatibility percentage
-🛠️  Strong Matches: Skills you have that match
-⚠️  Missing Skills: Gaps to address
-💬 Tailored Answer: "Why hire me?" response
-✉️  Cover Message: Professional introduction
-💡 Resume Suggestions: Specific improvements
-```
+#### Results Interpretation
+- **Compatibility Score**: Percentage match between resume and requirements
+- **Strength Analysis**: Demonstrated competencies that align with job needs
+- **Gap Identification**: Required skills or experience not present in resume
+- **Application Content**: Tailored responses and messaging
+- **Improvement Recommendations**: Specific resume and application enhancements
 
-#### Step 4: Apply with Confidence
-```
-✨ Copy the AI-generated content
-🎨 Customize it with your personal touch
-📤 Submit your optimized application
-🎉 Land more interviews!
-```
+#### Application Enhancement
+- Review AI-generated content
+- Customize materials with personal insights
+- Apply with optimized documentation
+- Track application outcomes for continuous improvement
 
-### 🎨 Example Workflow
+### Example Analysis Output
 
 ```
-Input:
-├── Resume: john_developer.pdf
-├── Job URL: https://company.com/jobs/senior-frontend
+Input Parameters:
+├── Resume: senior_developer_resume.pdf
+├── Job Source: https://company.com/careers/frontend-architect
 
-AI Analysis:
-├── Match Score: 87%
-├── Strong Matches: React, TypeScript, UI/UX
-├── Missing Skills: GraphQL, Testing frameworks
-├── Tailored Answer: "With 5+ years building scalable React apps..."
-├── Cover Message: "I'm excited to apply for the Senior Frontend role..."
-├── Resume Suggestions: "Add testing experience", "Highlight React projects"
-
-Output: Ready-to-use application content! 🚀
+Analysis Results:
+├── Compatibility Score: 89%
+├── Demonstrated Strengths: React, TypeScript, Architecture
+├── Identified Gaps: Cloud Infrastructure, DevOps
+├── Generated Response: Professional "why hire me" content
+├── Cover Letter Draft: Company-specific introduction
+├── Resume Recommendations: Experience quantification, skill prioritization
 ```
 
 ---
 
-## 🔌 API Documentation
+## API Reference
 
-### 🏥 Health Check
+### Health Verification
 ```http
 GET /health
 ```
 
-**Response:**
+**Response Structure:**
 ```json
 {
-  "status": "ok",
+  "status": "operational",
   "aiProvider": "Groq",
-  "model": "llama-3.3-70b-versatile"
+  "model": "llama-3.3-70b-versatile",
+  "timestamp": "2026-04-25T01:59:15.000Z"
 }
 ```
 
-### 📊 Job Analysis
+### Job Analysis Endpoint
 ```http
 POST /api/analyze
 Content-Type: multipart/form-data
 ```
 
-**Form Data:**
-- `jobLink` (string, optional): Full URL to job posting
-- `jobDescription` (string, optional): Complete job description text
-- `resumeFile` (file, required): Resume in PDF format
+**Request Parameters:**
+- `jobLink` (string, optional): Complete URL to job posting
+- `jobDescription` (string, optional): Full job description text
+- `resumeFile` (file, required): Resume document in PDF format
 
-**Response:**
+**Success Response:**
 ```json
 {
-  "summary": "Senior Frontend Developer role...",
-  "skills": ["React", "TypeScript", "CSS"],
-  "matchScore": 87,
-  "strongMatches": ["React development", "TypeScript expertise"],
-  "missingSkills": ["GraphQL", "Testing frameworks"],
-  "tailoredAnswer": "With 5 years of experience...",
-  "coverMessage": "I am excited to apply...",
-  "resumeSuggestions": ["Add testing experience", "Highlight projects"],
-  "rewrittenBullets": ["Led development of...", "Implemented..."]
+  "summary": "Senior Frontend Architect position...",
+  "skills": ["React", "TypeScript", "System Design"],
+  "matchScore": 89,
+  "strongMatches": ["React development", "TypeScript implementation"],
+  "missingSkills": ["AWS services", "Kubernetes"],
+  "tailoredAnswer": "With extensive experience in scalable React applications...",
+  "coverMessage": "I am writing to express my interest in the Senior Frontend Architect role...",
+  "resumeSuggestions": ["Include cloud infrastructure experience", "Quantify system performance improvements"],
+  "rewrittenBullets": ["Architected and implemented React component library serving 500+ developers", "Led migration to TypeScript across 20+ applications"]
 }
 ```
 
-**Error Responses:**
+**Error Response Examples:**
 ```json
-// Invalid file type
 {
   "error": "Please upload a PDF resume."
 }
 
-// Missing resume
-{
-  "error": "Please upload your resume PDF"
-}
-
-// Missing job input
 {
   "error": "Please provide either a job description or a job link"
 }
+
+{
+  "error": "AI analysis failed. Please try again."
+}
 ```
 
 ---
 
-## 🎨 UI Components & Features
+## User Interface Components
 
-### 🖥️ Main Interface
+### Primary Interface Layout
 
 ```
-┌─────────────────────────────────────────┐
-│ 🎯 ApplyGenie AI Header                 │
-├─────────────────────────────────────────┤
-│ 📋 Input Panel                          │
-│ ├── Job URL/Description Input           │
-│ └── Resume PDF Upload                   │
-│                                         │
-│ ⚡ Run Agent Button                     │
-│     └── Loading: "Agent analyzing..."   │
-├─────────────────────────────────────────┤
-│ 📊 Results Panel (shows after analysis) │
-│ ├── Match Score Circle                  │
-│ ├── Strong Matches List                 │
-│ ├── Missing Skills List                 │
-│ ├── Tailored Answer Card                │
-│ ├── Cover Message Card                  │
-│ └── Resume Suggestions List             │
-└─────────────────────────────────────────┘
+┌─────────────────────────────────────────────────┐
+│ Header: ApplyGenie AI Branding                  │
+├─────────────────────────────────────────────────┤
+│ Input Section                                   │
+│ ├── Job Information Input                       │
+│ │   ├── URL Field or                             │
+│ │   └── Description Textarea                     │
+│ └── Resume Document Upload                       │
+│     └── PDF File Selection                       │
+├─────────────────────────────────────────────────┤
+│ Action Controls                                 │
+│ └── Analysis Initiation Button                   │
+├─────────────────────────────────────────────────┤
+│ Results Display Area (Post-Analysis)             │
+│ ├── Compatibility Score Visualization            │
+│ ├── Skills Assessment Cards                      │
+│ ├── Generated Content Sections                   │
+│ └── Optimization Recommendations                 │
+└─────────────────────────────────────────────────┘
 ```
 
-### ✨ Interactive Features
+### Interface Features
 
-- **🔄 Loading Animations**: Smooth progress indicators
-- **📋 Copy to Clipboard**: One-click copying with feedback
-- **🎨 Hover Effects**: Subtle animations and color changes
-- **📱 Responsive Design**: Adapts to all screen sizes
-- **⚡ Real-time Validation**: Immediate feedback on inputs
-
-### 🎯 Key UI States
-
-#### Before Analysis
-- Clean input form with upload area
-- Placeholder text and helpful hints
-- Disabled run button until resume uploaded
-
-#### During Analysis
-- Animated loading indicator
-- "Agent analyzing..." status message
-- Disabled inputs and button
-
-#### After Analysis
-- Beautiful results cards with data
-- Copy buttons on text sections
-- Match score with animated progress
-- Skills displayed as interactive tags
+- **Progressive Disclosure**: Results appear only after analysis completion
+- **Interactive Elements**: Hover states and click feedback
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Accessibility**: Screen reader compatible, keyboard navigation
+- **Performance**: Optimized loading states and error boundaries
 
 ---
 
-## 🛠️ Technical Implementation
+## Development
 
-### 🎨 Frontend Architecture
-
-```
-stitch-ui/
-├── src/
-│   ├── components/
-│   │   └── DemoBlock.tsx     # Main UI component
-│   ├── index.css             # Tailwind + custom styles
-│   └── main.jsx              # React entry point
-├── tailwind.config.js        # UI theming
-├── vite.config.js            # Build configuration
-└── package.json              # Frontend dependencies
-```
-
-### ⚙️ Backend Architecture
+### Project Structure
 
 ```
-server/
-├── server.js                 # Express API server
-├── aiService.js              # Groq AI integration
-├── scraperService.js         # Playwright job scraping
-├── .env.example              # Environment template
-└── package.json              # Backend dependencies
+ApplyGenie.AI-JobApplicationAgent/
+├── server/                          # Backend application
+│   ├── server.js                   # Express server configuration
+│   ├── aiService.js                # AI integration and processing
+│   ├── scraperService.js           # Web scraping functionality
+│   ├── package.json                # Backend dependencies
+│   └── .env.example                # Environment template
+├── stitch-ui/                      # Frontend application
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── DemoBlock.tsx      # Main interface component
+│   │   ├── index.css              # Global styles and animations
+│   │   └── main.jsx               # Application entry point
+│   ├── tailwind.config.js         # UI configuration
+│   ├── package.json               # Frontend dependencies
+│   └── index.html                 # HTML template
+├── package.json                    # Root project configuration
+├── run.sh                         # Development startup script
+└── README.md                      # This documentation
 ```
 
-### 🔧 Key Technologies
+### Development Workflow
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| **Frontend** | React 18 + TypeScript | Modern UI development |
-| **Build Tool** | Vite | Fast development server |
-| **Styling** | Tailwind CSS | Utility-first CSS framework |
-| **Animations** | Framer Motion | Smooth transitions |
-| **Backend** | Node.js + Express | RESTful API server |
-| **File Upload** | Multer | Multipart form handling |
-| **PDF Parsing** | pdf-parse | Resume text extraction |
-| **Web Scraping** | Playwright | Job posting extraction |
-| **AI Engine** | Groq AI | Intelligent text analysis |
+1. **Environment Setup**: Configure local development environment
+2. **Dependency Installation**: Install frontend and backend dependencies
+3. **Configuration**: Set up API keys and environment variables
+4. **Development Server**: Start both frontend and backend servers
+5. **Code Modification**: Implement features with hot reloading
+6. **Testing**: Validate functionality across different scenarios
+7. **Code Review**: Ensure code quality and documentation standards
+
+### Testing Strategy
+
+- **Unit Tests**: Component and utility function testing
+- **Integration Tests**: API endpoint and data flow validation
+- **End-to-End Tests**: Complete user workflow verification
+- **Performance Tests**: Response time and resource usage analysis
+- **Accessibility Tests**: WCAG compliance verification
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions! Here's how to get started:
+We welcome contributions from the developer community. Please follow these guidelines:
 
-### Development Setup
-```bash
-# Fork the repository
-# Clone your fork
-git clone https://github.com/your-username/ApplyGenie.AI-JobApplicationAgent.git
+### Getting Started
+1. Fork the repository
+2. Create a feature branch from `main`
+3. Implement your changes with comprehensive testing
+4. Submit a pull request with detailed description
 
-# Set up development environment
-npm run install-all
-npm run start
-
-# Make your changes
-# Test thoroughly
-# Submit a pull request
-```
-
-### Guidelines
-- 🔍 **Code Quality**: Follow TypeScript best practices
-- 🧪 **Testing**: Test all features before submitting
-- 📝 **Documentation**: Update docs for new features
-- 🎨 **UI/UX**: Maintain the clean design aesthetic
-- 🔒 **Security**: Never commit sensitive data
+### Code Standards
+- **TypeScript**: Strict type checking enabled
+- **ESLint**: Code quality and consistency enforcement
+- **Prettier**: Automated code formatting
+- **Commit Messages**: Clear, descriptive commit history
+- **Documentation**: Update documentation for all changes
 
 ### Areas for Contribution
-- 🌐 **Internationalization**: Add multi-language support
-- 📱 **Mobile App**: React Native companion app
-- 🤖 **AI Improvements**: Enhanced analysis algorithms
-- 🎨 **Themes**: Additional UI themes
-- 📊 **Analytics**: Usage tracking and insights
+- **AI Model Integration**: Additional language model support
+- **Internationalization**: Multi-language interface support
+- **Mobile Applications**: React Native companion app
+- **Analytics**: Usage tracking and performance metrics
+- **Security**: Enhanced authentication and data protection
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-### Core Technologies
-- **Groq AI** - Lightning-fast LLM inference
-- **Playwright** - Reliable web automation
-- **React Ecosystem** - Modern frontend development
-- **Tailwind CSS** - Beautiful, responsive design
-
-### Inspiration
-- Modern SaaS applications with clean UI
-- AI-powered productivity tools
-- Professional job search platforms
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for complete terms and conditions.
 
 ---
 
-## 📞 Support & Contact
+## Acknowledgments
 
-- **📧 Email**: [your-email@example.com]
-- **🐛 Issues**: [GitHub Issues](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent/discussions)
+### Technology Partners
+- **Groq AI**: High-performance AI inference platform
+- **Playwright**: Reliable web automation framework
+- **React**: Modern user interface library
+- **Node.js**: Server-side JavaScript runtime
+
+### Project Inspiration
+- Modern SaaS application design patterns
+- AI-powered productivity tool ecosystems
+- Professional recruitment technology platforms
 
 ---
 
-## 🎉 What's Next?
+## Contact & Support
 
-We're continuously improving ApplyGenie AI! Upcoming features:
+- **Project Repository**: [GitHub](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent)
+- **Issue Tracking**: [GitHub Issues](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent/discussions)
 
-- 🚀 **Resume Builder**: AI-powered resume creation
-- 📈 **Application Tracking**: Track your job applications
-- 🤝 **LinkedIn Integration**: Direct application posting
-- 📊 **Analytics Dashboard**: Application success metrics
-- 🌍 **Multi-language Support**: Global accessibility
+---
+
+## Future Roadmap
+
+### Planned Enhancements
+- **Resume Builder**: AI-assisted resume creation and optimization
+- **Application Tracker**: Job application status and outcome monitoring
+- **LinkedIn Integration**: Direct application posting to professional networks
+- **Analytics Dashboard**: Application success metrics and insights
+- **Multi-format Support**: Additional resume format compatibility
 
 ---
 
 <div align="center">
 
-**Built with ❤️ by Ankit**
+**ApplyGenie AI - Transforming Job Applications Through Intelligent Analysis**
 
-*Transforming job applications with the power of AI*
-
-[![GitHub stars](https://img.shields.io/github/stars/Akkii88/ApplyGenie.AI-JobApplicationAgent?style=social)](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent)
-[![GitHub forks](https://img.shields.io/github/forks/Akkii88/ApplyGenie.AI-JobApplicationAgent?style=social)](https://github.com/Akkii88/ApplyGenie.AI-JobApplicationAgent)
+*Developed by Ankit - Professional AI-Powered Career Tools*
 
 </div>
