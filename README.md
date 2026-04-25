@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Job Application Agent
 
 A full-stack web application that helps users analyze job postings and generate tailored application materials using AI.
@@ -46,3 +47,7 @@ npm run dev
 ```
 
 5. Open your browser to `http://localhost:5173`
+=======
+# ApplyGenie.AI-JobApplicationAgent
+ApplyGenie AI is a full-stack AI-powered job application agent that analyzes a candidate’s resume against a job description and generates match scores, missing skills, tailored answers, and optimized application content.
+>>>>>>> 3856d4389b83cbb65cbb5d95835591f7d85e454d
