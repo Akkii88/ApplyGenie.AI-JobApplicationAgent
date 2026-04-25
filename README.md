@@ -16,6 +16,15 @@
 
 ---
 
+## Project Screenshots
+
+![Home](white/1.png)
+![Upload](white/2.png)
+![Job Input](white/3.png)
+![Processing](white/4.png)
+![Score](white/5.png)
+![Suggestions](white/6.png)
+![Output](white/7.png)
 ## Overview
 
 ApplyGenie AI is an intelligent full-stack web application that revolutionizes the job application process by analyzing candidate resumes against job descriptions using advanced AI. The platform provides personalized match scores, skills gap analysis, and generates tailored application content to improve job application success rates.
